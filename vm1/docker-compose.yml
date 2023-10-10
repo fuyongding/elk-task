@@ -1,0 +1,60 @@
+version: '3'
+services:
+  master_node_1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: master-node-1
+    environment:
+      - node.name=master-node-1
+      - node.master=true
+      - node.data=false
+      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
+      - cluster.name=your-cluster-name
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+
+  http_node_1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: http-node-1
+    environment:
+      - node.name=http-node-1
+      - node.master=false
+      - node.data=false
+      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
+      - cluster.name=your-cluster-name
+    ports:
+      - "9201:9200"
+    volumes:
+      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+
+  data_node_1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: data-node-1
+    environment:
+      - node.name=data-node-1
+      - node.master=false
+      - node.data=true
+      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
+      - cluster.name=your-cluster-name
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    volumes:
+      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+
+  data_node_2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    container_name: data-node-2
+    environment:
+      - node.name=data-node-2
+      - node.master=false
+      - node.data=true
+      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
+      - cluster.name=your-cluster-name
+    ports:
+      - "9203:9200"
+      - "9303:9300"
+    volumes:
+      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
