@@ -1,60 +1,92 @@
 version: '3'
 services:
   master_node_2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.3
     container_name: master-node-2
     environment:
       - node.name=master-node-2
-      - node.master=true
-      - node.data=false
-      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
-      - cluster.name=your-cluster-name
+      - node.roles=[ master ]
+      - cluster.initial_master_nodes=master-node-2
+      - cluster.name=test-cluster
+      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - network.host=172.21.59.105
     ports:
       - "9200:9200"
       - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+      - ./master_2:/var/lib/elasticsearch/data
 
   http_node_2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.3
     container_name: http-node-2
     environment:
       - node.name=http-node-2
-      - node.master=false
-      - node.data=false
-      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
-      - cluster.name=your-cluster-name
+      - node.roles=[ ]
+      - cluster.initial_master_nodes=master-node-2
+      - cluster.name=test-cluster
+      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - network.host=172.21.59.105
     ports:
       - "9201:9200"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+      - ./client_2:/var/lib/elasticsearch/data
 
   data_node_3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.3
     container_name: data-node-3
     environment:
       - node.name=data-node-3
-      - node.master=false
-      - node.data=true
-      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
-      - cluster.name=your-cluster-name
+      - node.roles=[ data ]
+      - cluster.initial_master_nodes=master-node-2
+      - cluster.name=test-cluster
+      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - network.host=172.21.59.105
     ports:
       - "9202:9200"
       - "9302:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+      - ./data_3:/var/lib/elasticsearch/data
 
   data_node_4:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.3
     container_name: data-node-4
     environment:
       - node.name=data-node-4
-      - node.master=false
-      - node.data=true
-      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
-      - cluster.name=your-cluster-name
+      - node.roles=[ data ]
+      - cluster.initial_master_nodes=master-node-2
+      - cluster.name=test-cluster
+      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - network.host=172.21.59.105
     ports:
       - "9203:9200"
       - "9303:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+      - ./data_4:/var/lib/elasticsearch/data

@@ -1,16 +1,24 @@
 version: '3'
 services:
   master_node_3:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.3
     container_name: master-node-3
     environment:
       - node.name=master-node-3
       - node.master=true
       - node.data=false
-      - discovery.seed_hosts=master-node-1,master-node-2,master-node-3,data-node-1,data-node-2,data-node-3,data-node-4
-      - cluster.name=your-cluster-name
+      - cluster.initial_master_nodes=master-node-1,master-node-2,master-node-3
+      - cluster.name=test-cluster
+      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
     ports:
       - "9200:9200"
       - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - /path/to/elasticsearch-data:/usr/share/elasticsearch/data
+      - ./master_3:/var/lib/elasticsearch/data
