@@ -1,16 +1,16 @@
 version: '3'
 services:
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.15.0
+    image: docker.elastic.co/logstash/logstash:8.10.3
     container_name: logstash
     environment:
       - ELASTICSEARCH_URL=http://http-node-1:9200,http://http-node-2:9200
     ports:
       - "5044:5044"
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.15.0
+    image: docker.elastic.co/kibana/kibana:8.10.3
     container_name: kibana
     environment:
-      - ELASTICSEARCH_URL=http://http-node-1:9200,http://http-node-2:9200
+      - ELASTICSEARCH_URL=http://172.24.123.135:9201,http://172.24.112.36:9201
     ports:
       - "5601:5601"

@@ -6,13 +6,15 @@ services:
     environment:
       - node.name=master-node-2
       - node.roles=[ master ]
-      - cluster.initial_master_nodes=master-node-2
+      - cluster.initial_master_nodes=172.24.123.135:9300,master-node-2
       - cluster.name=test-cluster
-      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - discovery.seed_hosts=172.24.123.135:9300,172.24.112.36:9300,172.24.115.94:9300
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
-      - network.host=172.21.59.105
+      - http.port=9200
+      - transport.port=9300
+      - network.publish_host=172.24.112.36
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -29,15 +31,18 @@ services:
     environment:
       - node.name=http-node-2
       - node.roles=[ ]
-      - cluster.initial_master_nodes=master-node-2
+      - cluster.initial_master_nodes=172.24.123.135:9300,master-node-2
       - cluster.name=test-cluster
-      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - discovery.seed_hosts=172.24.123.135:9300,172.24.112.36:9300,172.24.115.94:9300
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
-      - network.host=172.21.59.105
+      - http.port=9201
+      - transport.port=9301
+      - network.publish_host=172.24.112.36
     ports:
-      - "9201:9200"
+      - "9201:9201"
+      - "9301:9301"
     ulimits:
       memlock:
         soft: -1
@@ -51,16 +56,18 @@ services:
     environment:
       - node.name=data-node-3
       - node.roles=[ data ]
-      - cluster.initial_master_nodes=master-node-2
+      - cluster.initial_master_nodes=172.24.123.135:9300,master-node-2
       - cluster.name=test-cluster
-      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - discovery.seed_hosts=172.24.123.135:9300,172.24.112.36:9300,172.24.115.94:9300
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
-      - network.host=172.21.59.105
+      - http.port=9202
+      - transport.port=9302
+      - network.publish_host=172.24.112.36
     ports:
-      - "9202:9200"
-      - "9302:9300"
+      - "9202:9202"
+      - "9302:9302"
     ulimits:
       memlock:
         soft: -1
@@ -74,16 +81,18 @@ services:
     environment:
       - node.name=data-node-4
       - node.roles=[ data ]
-      - cluster.initial_master_nodes=master-node-2
+      - cluster.initial_master_nodes=172.24.123.135:9300,master-node-2
       - cluster.name=test-cluster
-      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - discovery.seed_hosts=172.24.123.135:9300,172.24.112.36:9300,172.24.115.94:9300
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
-      - network.host=172.21.59.105
+      - http.port=9203
+      - transport.port=9303
+      - network.publish_host=172.24.112.36
     ports:
-      - "9203:9200"
-      - "9303:9300"
+      - "9203:9203"
+      - "9303:9303"
     ulimits:
       memlock:
         soft: -1

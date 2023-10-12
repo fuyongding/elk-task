@@ -5,14 +5,16 @@ services:
     container_name: master-node-3
     environment:
       - node.name=master-node-3
-      - node.master=true
-      - node.data=false
-      - cluster.initial_master_nodes=master-node-1,master-node-2,master-node-3
+      - node.roles=[ master ]
+      - cluster.initial_master_nodes=172.24.123.135:9300,172.24.112.36:9300,master-node-3
       - cluster.name=test-cluster
-      - discovery.seed_hosts=172.21.60.51:9300,172.21.59.105:9300,172.21.57.9:9300
+      - discovery.seed_hosts=172.24.123.135:9300,172.24.112.36:9300,172.24.115.94:9300
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=false
+      - http.port=9200
+      - transport.port=9300
+      - network.publish_host=172.24.115.94
     ports:
       - "9200:9200"
       - "9300:9300"
