@@ -34,7 +34,7 @@ services:
     container_name: client-node-1
     environment:
       - node.name=client-node-1
-      - node.roles=[]
+      - node.roles=[] # Coordinating only node
       - cluster.initial_master_nodes=master-node-1,master-node-2,master-node-3
       - cluster.name=${CLUSTER_NAME}
       - discovery.seed_hosts=${VM_ONE_IP}:9300,${VM_TWO_IP}:9300,${VM_THREE_IP}:9300

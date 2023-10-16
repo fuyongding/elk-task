@@ -6,10 +6,8 @@ services:
       container_name: kibana
       ports:
         - "5601:5601"
-      environment:
-        - ELASTICSEARCH_URL=http://${VM_ONE_IP}:9201
-      #volumes:
-      #  - ./config:/usr/share/kibana/config/
+      volumes:
+        - ./config:/usr/share/kibana/config/
       
   # logstash:
   #   image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
@@ -18,16 +16,3 @@ services:
   #     - ELASTICSEARCH_URL=http://http-node-1:9200,http://http-node-2:9200
   #   ports:
   #     - "5044:5044"
-  
-
-
-# ** THIS IS AN AUTO-GENERATED FILE **
-#
-
-# Default Kibana configuration for docker target
-# server.host: "0.0.0.0"
-# server.shutdownTimeout: "5s"
-# elasticsearch.hosts: [ "http://elasticsearch:9200" ]
-# monitoring.ui.container.elasticsearch.enabled: truekibana@af1181fcc877:~/config$
-
-## /usr/share/kibana/config

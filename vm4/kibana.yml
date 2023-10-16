@@ -1,0 +1,9 @@
+# Default Kibana configuration for docker target
+server.host: "0.0.0.0"
+server.shutdownTimeout: "5s"
+elasticsearch.hosts:
+  - http://172.24.123.135:9200
+  - http://172.24.112.36:9200 # somehow not able to route request to this node when the first node is down
+monitoring.ui.container.elasticsearch.enabled: true
+
+# should configure server-publicBaseUrl for production environment
